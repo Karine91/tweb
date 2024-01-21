@@ -1,0 +1,55 @@
+.popup-stream-with {
+  .popup-container {
+    max-width: 420px;
+  }
+  .popup-header {
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin: 12px 8px;
+    color: var(--secondary-text-color);
+  }
+
+  .row-grid .left-icon {
+    grid-area: left;
+    position: static;
+    margin-right: 32px;
+    transform: none;
+  }
+
+  .stream-key-input {
+    border: none;
+
+  }
+
+  .stream-key-row .row-subtitle-row {
+    justify-content: flex-start;
+    .row-subtitle {
+      flex-grow: 0
+    }
+
+    .row-subtitle-right {
+      margin-left: 0.5em;
+    }
+  }
+
+  .show-stream-key-btn {
+    pointer-events: initial;
+    width: 16px;
+    height: 16px;
+
+   
+    .button-icon {
+      font-size: medium;
+    }
+  }
+
+  .popup-footer {
+    padding: 0;
+
+    .popup-stream-with-button {
+      margin-top: 16px;
+    }
+  }
+}

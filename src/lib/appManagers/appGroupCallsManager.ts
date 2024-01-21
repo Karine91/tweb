@@ -256,7 +256,23 @@ export class AppGroupCallsManager extends AppManager {
     return update.call;
   }
 
+  public async createLiveStreamGroupCall(peerId: string | number, scheduleDate?: number, title?: string) {
+    const updates = await this.apiManager.invokeApi('phone.createGroupCall', {
+      peer: this.appChatsManager.getInputPeer(peerId.toChatId()),
+      random_id: nextRandomUint(32),
+      schedule_date: scheduleDate,
+      title,
+      rtmp_stream: true
+    });
+
+    this.apiUpdatesManager.processUpdateMessage(updates);
+
+    const update = (updates as Updates.updates).updates.find((update) => update._ === 'updateGroupCall') as Update.updateGroupCall;
+    return update.call;
+  }
+
   public getGroupCallInput(id: GroupCallId): InputGroupCall {
+    console.log('getGroupCallInput', id)
     const groupCall = this.getGroupCall(id);
     return {
       _: 'inputGroupCall',
@@ -380,5 +396,18 @@ export class AppGroupCallsManager extends AppManager {
     }).then((updates) => {
       this.apiUpdatesManager.processUpdateMessage(updates);
     });
+  }
+
+  public getRTMPUrl(peerId: number) {
+    return this.apiManager.invokeApi('phone.getGroupCallStreamRtmpUrl', {
+      peer: this.appChatsManager.getInputPeer(peerId.toChatId()),
+      revoke: true
+    })
+  }
+
+  public getStreamChannels(groupCallId: GroupCallId) {
+    return this.apiManager.invokeApi('phone.getGroupCallStreamChannels', {
+      call: this.getGroupCallInput(groupCallId)
+    })
   }
 }
